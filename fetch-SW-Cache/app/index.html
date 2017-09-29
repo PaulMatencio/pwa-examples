@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta charset="utf-8">
+    <link href="css/styles.css" rel="stylesheet">
+    <title>PWA example</title>
+  </head>
+
+  <body>
+    <h1>Fetch API - Service Worker - Cache Storage API</h1>
+    <header class="container">
+      <button class="button" id="json-button">Fetch JSON</button>
+      <button class="button" id="img-button">Fetch image</button>
+      <button class="button" id="text-button">Fetch text</button>
+      <button class="button" id="head-button">HEAD request</button>
+      <button class="button" id="reset-button">Reset elements</button>
+    </header>
+    <section class="container">
+      <p id="message"></p>
+    </section>
+    <section class="container" id="images">
+    </section>
+    <section class="container" id="animals">
+    </section>
+    <script src="js/register.js"></script>
+    <!--script src="js/idb.js"></script-->
+    <script src="js/main.js"></script>
+
+    <script>
+      var jsonButton = document.getElementById('json-button');
+      if (jsonButton) jsonButton.addEventListener('click', app.fetchJSON);
+      var imgButton = document.getElementById('img-button');
+      if (imgButton) imgButton.addEventListener('click', app.fetchImage);
+      var textButton = document.getElementById('text-button');
+      if (textButton)   textButton.addEventListener('click', app.fetchText);
+      var headButton = document.getElementById('head-button');
+      if (headButton) headButton.addEventListener('click', app.headRequest);
+      var resetButton = document.getElementById('reset-button');
+      if (resetButton) resetButton.addEventListener('click', app.resetItems);
+    </script>
+
+  </body>
+
+</html>
