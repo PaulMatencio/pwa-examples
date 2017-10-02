@@ -23,4 +23,4 @@ Clone the repository  https://github.com/PaulMatencio/fetch-sw-cache
 ## For  Chrome, use Developper tools
 1. Console => to check where response is coming from
 2. Application => Service workers and Cache Storage
-3. If static pages are updated, you need to unregister the service worker before you reload the page.
+3. If static pages are updated, you need to unregister the service worker before you reload the page or change the cache name

@@ -25,7 +25,10 @@ var app = (function() {
       backend = true;
       return response.json();
     })
-    .then(showAnimals)
+    .then(function(data){
+      console.log(`Show animals ${data} from backend`);
+      showAnimals(data,'Backend');
+    })
     .catch(logError);
      /* retrieve data from cache */
      caches.match(url)
@@ -35,7 +38,8 @@ var app = (function() {
      })
      .then(function(data){
        if (!backend) {
-         showAnimals(data);
+         console.log(`Show animals ${data} from cache`);
+         showAnimals(data,"Cache");
        }
      })
      .catch(function(){
@@ -62,17 +66,18 @@ var app = (function() {
     }
   }
 
-  function showAnimals(data) {
+  function showAnimals(data,origine) {
+     console.log(origine);
      var htmlContent = "";
      var animals =  document.getElementById('animals');
-     htmlContent = `<div class="item"> <h2>${data.type}</h2><p>`   ;
+     htmlContent = `<div class="item"> <h2>${data.type}</h2><p>` ;
      for ( var animal in data.animals ) {
        var li =  `${animal} = ${data.animals[animal]}</br>`;
        htmlContent += li;
      }
-     htmlContent += "</p></div>";
+     htmlContent += `</p><h4>${origine}</h></div>`;
      if (animals) {
-       animals.insertAdjacentHTML('afterbegin',htmlContent);
+       animals.insertAdjacentHTML('beforeend',htmlContent);
      }
    }
 
@@ -83,13 +88,18 @@ var app = (function() {
     }
   }
 
-  function showImage(blob) {
+  function showImage(blob,origine) {
     var images = document.getElementById('images');
+    var figCaption = document.createElement('figCaption');
+    figCaption.insertAdjacentHTML('afterbegin',`<h4> ${origine} </h4>`)
     var imgElem = document.createElement('img');
-    imgElem.classList.add('item')
-    images.appendChild(imgElem);
-    var imgUrl = URL.createObjectURL(blob);
-    imgElem.src = imgUrl;
+    imgElem.src = URL.createObjectURL(blob);
+    imgElem.classList.add('item');
+    var figureElem = document.createElement('figure');
+    figureElem.appendChild(imgElem);
+    figureElem.appendChild(figCaption);
+    figureElem.classList.add('item');
+    images.appendChild(figureElem);
   }
 
   function readResponseAsBlob(response) {
@@ -107,7 +117,9 @@ var app = (function() {
         backend = true;
         return response.blob();
       })
-      .then(showImage)
+      .then(function(blob){
+        showImage(blob,'Backend');
+      })
       .catch(logError) ;
      // fetch  data from cache
     caches.match(url)
@@ -118,7 +130,7 @@ var app = (function() {
     .then(function(data){
       if (!backend) {
         console.log(`Show image ${data} from cache`);
-        showImage(data);
+        showImage(data,"Cache");
       }
     })
     .catch(function(){
