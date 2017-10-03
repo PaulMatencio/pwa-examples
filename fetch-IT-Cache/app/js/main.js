@@ -19,6 +19,10 @@
     const errorContainer = document.querySelector('#error-container');
     const getFresh  = document.querySelector('#fresh-data');
     const dynamicCache = 'mysite-dynamic';
+    let connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    let type = connection.type;
+
+    console.log("connection type",type);
 
     function validateResponse(response) {
       if (!response.ok) {
@@ -29,24 +33,11 @@
     /*
     *     TODO OFFLINE => IndexedDB
     */
-    /*
-    window.addEventListener('load', function() {
-        var status = document.getElementById("status");
-        var log = document.getElementById("log");
 
-        function updateOnlineStatus(event) {
-          var condition = navigator.onLine ? "online" : "offline";
-
-          status.className = condition;
-          status.innerHTML = condition.toUpperCase();
-
-          log.insertAdjacentHTML("beforeend", "Event: " + event.type + "; Status: " + condition);
-        }
-
-        window.addEventListener('online',  updateOnlineStatus);
-        window.addEventListener('offline', updateOnlineStatus);
-    })
-    */
+    function updateConnectionStatus() {
+      console.log("Connection type is change from " + type + " to " + connection.type);
+    }
+    connection.addEventListener('typechange', updateConnectionStatus);
 
     form.addEventListener('submit', function (e) {
         e.preventDefault();

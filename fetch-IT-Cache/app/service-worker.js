@@ -13,6 +13,9 @@
     'js/main.js',
     'css/styles.css',
   ];
+  var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  var type = connection.type;
+  console.log("connection type",type);
 
   function LogeError(error){
     console.log(error);
@@ -59,20 +62,18 @@
     let url = new URL(event.request.url);
     if (event.request.method !==  'GET') return ;
     event.respondWith(
-
       caches.open(cacheStorage).then(function(cache) {
         // console.log(url.pathname);
-
         if (url.pathname.indexOf('/search/',0) < 0)  {
-
-          /* return the response from cache storage first otherwise return from fetch
+          /*
+          *  return the response from cache storage first otherwise return from fetch
           *  fetch will save save the response to the Cache storage
           */
-
           return cache.match(event.request).then(function (response) {
             if (response) {
                 console.log(`Get ${url} from cache`);
             }
+            /* if response is undefined fetch and cache */
             return response ||
               fetch(event.request)
                .then(function(response) {
@@ -86,15 +87,21 @@
           });
        }  else {
             // return myFetch(event.request);
+
             /* for search, always fetch from the netwaork
-            * store the response in the cache
-            * then return the response to the requester
-            * it is up to the requestor to accept or not the response
+            *  then cache  the response
+            *  clone the respnse and  return it to the requester
+            *  it is up to the requestor to use or not the response
             */
 
             return  fetch(event.request)
              .then(function(response) {
                 console.log(`Get ${url} straight from network`);
+                /*
+                *  the response is cloned because the request is a stream that can
+                *  only be consumed once.
+                *  clone a copy to serve later on
+                */
                 cache.put(event.request, response.clone());
                 return response;
              })
