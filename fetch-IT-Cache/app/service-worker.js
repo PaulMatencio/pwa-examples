@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  var cacheStorage = 'pages-cache-v2';
+  var cacheStorage = 'pages-cache-v3';
   var filesToCache = [
     '.',
     'index.html',
@@ -9,13 +9,17 @@
     'images/icon-article.png',
     'images/icon-no-articles.png',
     'images/icon-no-image.png',
+    'images/icon-articles-images.jpg',
     'js/register.js',
     'js/main.js',
     'css/styles.css',
   ];
   var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-  var type = connection.type;
-  console.log("connection type",type);
+  var type;
+  if (connection) {
+    type = connection.type;
+    console.log("connection type",type);
+  }
 
   function LogeError(error){
     console.log(error);

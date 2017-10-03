@@ -19,10 +19,12 @@
     const errorContainer = document.querySelector('#error-container');
     const getFresh  = document.querySelector('#fresh-data');
     const dynamicCache = 'mysite-dynamic';
+    let type ;
     let connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    let type = connection.type;
-
-    console.log("connection type",type);
+    if (connection) {
+      type = connection.type;
+      console.log("connection type",type);
+    }
 
     function validateResponse(response) {
       if (!response.ok) {
@@ -37,7 +39,11 @@
     function updateConnectionStatus() {
       console.log("Connection type is change from " + type + " to " + connection.type);
     }
-    connection.addEventListener('typechange', updateConnectionStatus);
+
+    if (connection) {
+      connection.addEventListener('typechange', updateConnectionStatus);
+    }
+
 
     form.addEventListener('submit', function (e) {
         e.preventDefault();

@@ -1,0 +1,24 @@
+[debug] [2017-10-03T08:57:41.093Z] ----------------------------------------------------------------------
+[debug] [2017-10-03T08:57:41.097Z] Command:      /usr/local/bin/node /usr/local/bin/firebase deploy --debug
+[debug] [2017-10-03T08:57:41.098Z] CLI Version:  3.9.1
+[debug] [2017-10-03T08:57:41.098Z] Platform:     linux
+[debug] [2017-10-03T08:57:41.098Z] Node Version: v6.11.0
+[debug] [2017-10-03T08:57:41.098Z] Time:         Tue Oct 03 2017 10:57:41 GMT+0200 (CEST)
+[debug] [2017-10-03T08:57:41.098Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-10-03T08:57:41.108Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-10-03T08:57:41.109Z] > authorizing via signed-in user
+[debug] [2017-10-03T08:57:41.110Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-10-03T08:57:41.111Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/xSk3HNw9nYZfT_fQ4Ckvkd4tc2BDcc4u2JAO_BCv_y94RQGzVnP8RvhossZ9GXam',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Tue Oct 03 2017 10:57:41 GMT+0200 (CEST)
+[debug] [2017-10-03T08:57:41.233Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-03T08:57:41.238Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/pwa-ex1-95801  
+ Tue Oct 03 2017 10:57:41 GMT+0200 (CEST)
+[debug] [2017-10-03T08:57:41.864Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-03T08:57:41.866Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/pwa-ex1-95801/tokens  
+ Tue Oct 03 2017 10:57:41 GMT+0200 (CEST)
+[debug] [2017-10-03T08:57:42.648Z] <<< HTTP RESPONSE 200
