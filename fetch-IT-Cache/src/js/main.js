@@ -17,13 +17,33 @@
     const imageContainer = document.querySelector('#image-container');
     const articleContainer = document.querySelector('#article-container');
     const errorContainer = document.querySelector('#error-container');
+    const getFresh  = document.querySelector('#fresh-data');
     const dynamicCache = 'mysite-dynamic';
+    let type ;
+    let connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (connection) {
+      type = connection.type;
+      console.log("connection type",type);
+    }
 
     function validateResponse(response) {
       if (!response.ok) {
         throw(response.statusText);
       } else return response;
     }
+
+    /*
+    *     TODO OFFLINE => IndexedDB
+    */
+
+    function updateConnectionStatus() {
+      console.log("Connection type is change from " + type + " to " + connection.type);
+    }
+
+    if (connection) {
+      connection.addEventListener('typechange', updateConnectionStatus);
+    }
+
 
     form.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -34,6 +54,7 @@
 
         var articles = false;
         var unsplash = false;
+        var freshData = getFresh.checked;
         searchedForText = searchField.value;
         let requestHeaders = new Headers();
         //  get  images
@@ -42,10 +63,11 @@
 
         getJson(url,requestHeaders)
           .then(json => {
-             if (!unsplash)  {
+             if (!unsplash || freshData)  {
                 unsplash = true;
                 let origine = 'Backend';
                 logGet(url,origine);
+                imageContainer.innerHTML = '';
                 addImage(json,origine);
              }
            })
@@ -53,13 +75,13 @@
             requestError(error,'images');
           })
 
-        // caches.open(dynamicCache).then(function(cache) {
-          caches.match(url).then(response => {
-            if (!response )  throw Error(`No cache data for ${url}`);
+          /* Read images from the cache */
+        caches.match(url).then(response => {
+          if (!response )  throw Error(`No cache data for ${url}`);
             return response.json();
-           })
-           .then(json => {
-              if (!unsplash) {
+          })
+          .then(json => {
+            if (!unsplash) {
                 let origine = 'Cache Storage';
                 logGet(url,origine);
                 unsplash = true;
@@ -67,39 +89,35 @@
               }
             })
           .catch( error => noCache(error,'images'))
-       //   })
-
-
 
         //  get  articles
         const nytSearchKey = "72f579b41d55f0fac5b79ab556ba913f:1:73683129";
-        let url1 = `http://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchedForText}&api-key=${nytSearchKey}`  ;
+        let url1 = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchedForText}&api-key=${nytSearchKey}`  ;
         getJson(url1,{})
         .then (json => {
-            if (!articles) {
+            if (!articles || freshData) {
               articles = true;
               let origine = 'Backend';
               logGet(url1,origine);
+              articleContainer.innerHTML='';
               addArticles(json,origine);
             }
           })
         .catch( error => requestError(error,'articles'))
 
-         // caches.open(dynamicCache).then(function(cache) {
-              caches.match(url1).then(response => {
-                if (!response )  throw Error(`No cache data for ${url1}`);
-                  return response.json();
-                })
-                .then(json => {
-                  if (!articles) {
-                    let origine = 'Cache Storage';
-                    logGet(url1,origine);
-                    articles = true;
-                    addArticles(json,origine);
-                  }
-                 })
-                .catch( error => noCache(error,'articles'))
-       //  })
+        caches.match(url1).then(response => {
+          if (!response )  throw Error(`No cache data for ${url1}`);
+            return response.json();
+          })
+          .then(json => {
+            if (!articles) {
+              let origine = 'Cache Storage';
+              logGet(url1,origine);
+              articles = true;
+              addArticles(json,origine);
+            }
+           })
+          .catch( error => noCache(error,'articles'))
 
     });
 
@@ -141,7 +159,7 @@
     }
 
    function requestError(error, part) {
-        let htmlContent = `<p class="network-earning-error">${error} ${part} </p>`
+        let htmlContent = `<p class="network-earning-error item">${error} ${part} </p>`
         errorContainer.insertAdjacentHTML('beforeend',htmlContent);
    }
 
