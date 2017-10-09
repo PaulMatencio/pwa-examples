@@ -17,9 +17,14 @@
     "gulp-clean-css": "^3.9.0",
     "gulp-cleancss": "^0.2.2",
     "gulp-concat": "^2.6.1",
-    "gulp-imagemin": "^3.3.0",
+    "gulp-critical-css": "^1.0.1",
+    "gulp-imagemin": "^3.4.0",
+    "gulp-inline-css": "^3.1.0",
     "gulp-minify-html": "^1.0.6",
     "gulp-minify-inline": "^1.0.0",
-    "gulp-uglify": "^3.0.0"
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-uglify": "^3.0.0",
+    "uglify-es": "github:mishoo/UglifyJS2#harmony",
+    "uglify-js": "^3.1.3"
   }
 }

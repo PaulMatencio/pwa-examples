@@ -1,10 +1,7 @@
 const gulp = require('gulp'),
-    uglify = require('gulp-uglify'),
     minifycss = require('gulp-clean-css'),
     imagemin = require('gulp-imagemin'),
-    babel = require('gulp-babel'),
     minifyinline = require('gulp-minify-inline'),
-    critical = require('critical'),
     concat = require('gulp-concat'),
     sourcemaps = require('gulp-sourcemaps'),
     minifyhtml = require('gulp-minify-html');
@@ -29,7 +26,7 @@ gulp.task('mini-html-1', function() {
 
   return gulp.src('*.html')
     .pipe(minifyhtml(opts))
-    .pipe(gulp.dest('app'));
+    .pipe(gulp.dest('app/'));
 });
 
 gulp.task('mini-critical-html', function() {
@@ -48,15 +45,6 @@ gulp.task('mini-inline', function() {
     .pipe(gulp.dest('app'))
 });
 
-// JavaScript  minifier
-gulp.task('mini-js', function() {
-  gulp.src('src/js/*.js')
-    .pipe(babel({
-      presets: ['es2015']
-     }))
-    .pipe(uglify())
-    .pipe(gulp.dest('app/js'));
-});
 
 // CSS minifier
 gulp.task('mini-css', function() {
@@ -65,12 +53,17 @@ gulp.task('mini-css', function() {
     .pipe(gulp.dest('app/css'));
 });
 
+gulp.task('critical-css', function() {
+  gulp.src('app/index.html')
+    .pipe(criticalCss())
+    .pipe(gulp.dest('app'));
+});
 
 gulp.task('critical', function () {
   critical.generate({
     base: 'src',
     src: 'index.html',
-    css: ['src/css/style.css'],
+    css: ['src/css/styles.css'],
     dimensions: [{
       width: 320,
       height: 480
@@ -117,5 +110,5 @@ gulp.task('watch', function() {
   gulp.watch('src/images/*', ['optimize-image']);
 });
 
-gulp.task('default', ['mini-html','mini-css', 'compress-image']);
-// gulp.task('more',['critical','mini-html-1']);
+gulp.task('build', ['mini-html','mini-inline','mini-css','compress-image']);
+gulp.task('build-critical',['critical','mini-html','mini-css', 'compress-image']);

@@ -1,15 +1,3 @@
-
-/*
-    Wrapping  =  return New Promise(function(){})
-    Then ing   .then()
-    Catch ing  .catch()
-    Chain ing   .then()  .catch()
-
-    get is a Promise function since  fetch is a Promise function
-
-*/
-
-
 (function () {
     const form = document.querySelector('#search-form');
     const searchField = document.querySelector('#search-keyword');

@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
     <meta name="theme-color" content="#db5945">
     <title>PWA example</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <!--link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"-->
     <link href="css/styles.css" rel="stylesheet">
     <link rel="manifest" href="manifest.json">
+
 </head>
 <body>
 
@@ -32,8 +33,37 @@
       <div id="image-container"></div>
       <div id="article-container"></div>
     </div>
-    <!--/div-->
-    <script src="js/register.js"></script>
+    
+    <script>
+      WebFontConfig = {
+        google: {
+          families: ['Open Sans:400,700']
+        }
+      };
+      (function(d) {
+         var wf = d.createElement('script'), s = d.scripts[0];
+         // wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+         wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+         s.parentNode.insertBefore(wf, s);
+       })(document);
+    </script>
+
+    <script>
+     (function() {
+        'use strict';
+        if (!('serviceWorker' in navigator)) {
+          console.log('Service worker not supported');
+          return;
+        }
+        navigator.serviceWorker.register('service-worker.js',{scope: './'})
+        .then(function(registration) {
+          console.log('Registered at scope',registration.scope);
+        })
+        .catch(function(error) {
+          console.log('Registration failed:', error);
+        });
+     })();
+    </script>
     <script src="js/main.js"></script>
 </body>
 </html>

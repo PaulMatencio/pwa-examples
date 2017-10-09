@@ -1,7 +1,7 @@
 (function() {
   'use strict';
-  var cacheStorage = 'pages-cache-v3';
-  var filesToCache = [
+  let cacheStorage = 'pages-cache-v3';
+  let filesToCache = [
     '.',
     'index.html',
     'pages/404.html',
@@ -12,8 +12,10 @@
     'js/main.js',
     'css/styles.css',
   ];
-  var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-  var type;
+
+  let ignoreUrlParametersMatching = [/^utm_/];
+  let  connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  let type;
   if (connection) {
     type = connection.type;
     console.log("connection type",type);
@@ -36,6 +38,29 @@
      })
   }
 
+  var stripIgnoredUrlParameters = function (originalUrl,
+    ignoreUrlParametersMatching) {
+    var url = new URL(originalUrl);
+    // Remove the hash; see https://github.com/GoogleChrome/sw-precache/issues/290
+    url.hash = '';
+
+    url.search = url.search.slice(1) // Exclude initial '?'
+      .split('&') // Split into an array of 'key=value' strings
+      .map(function(kv) {
+        return kv.split('='); // Split each 'key=value' string into a [key, value] array
+      })
+      .filter(function(kv) {
+        return ignoreUrlParametersMatching.every(function(ignoredRegex) {
+          return !ignoredRegex.test(kv[0]); // Return true iff the key doesn't match any of the regexes.
+        });
+      })
+      .map(function(kv) {
+        return kv.join('='); // Join each [key, value] array into a 'key=value' string
+      })
+      .join('&'); // Join the array of 'key=value' strings into a string with '&' in between each
+
+    return url.toString();
+  };
 
   self.addEventListener('install', function(event) {
     console.log('Service worker below installing...');
@@ -52,8 +77,7 @@
   *   newly installed service worker isn't activated until
   */
   self.addEventListener('activate', function(event) {
-    console.log('Service worker below activating...');
-    console.log("rebuild");
+    console.log('Service worker activating...');
     /*
     *   Update Cache are  done  when service worker is activated
     */

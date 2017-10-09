@@ -21,40 +21,6 @@ body {
     width: 80%;
 }
 
-#image-container, #article-container  {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 10px;
-  width: 50%;
-}
-
-#error-container  {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 10px;
-  width: 100%;
-}
-
-.response-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  width: 100%;
-
-}
-
-.item {
-  margin: 2px;
-  padding: 2px;
-  border-width: thin;
-  background-color: #fff;
-}
-
 .masthead {
     background: #2e3d49;
     padding: 2em 0;
@@ -68,7 +34,7 @@ body {
     text-align: center;
 }
 
-/*** Search Form ***/
+
 #search-form {
     display: flex;
     padding: 1em 0;
@@ -104,20 +70,57 @@ body {
 	border-radius: 5px;
 }
 
-.check-box:hover {
-  transform: scale(1.5);
-}
-
 span {
   color: #fff;
   margin: 20px 0px 0px 10px;
   font-size: 20px;
 }
 
+
+.check-box:hover {
+  transform: scale(1.5);
+}
+
 #submit-btn:hover {
     background-color: #12a159;
     transform: scale(1.2);
 }
+
+#image-container, #article-container  {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+  width: 50%;
+}
+
+#error-container  {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.response-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+
+}
+
+.item {
+  margin: 2px;
+  padding: 2px;
+  border-width: thin;
+  background-color: #fff;
+}
+
+
 /**  Online status  **/
 
 #status {

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <meta name="theme-color" content="#db5945">
+    <title>PWA example</title>
+    <style type="text/css">
+        html{box-sizing:border-box}*,::after,::before{box-sizing:inherit}body{background:#fafbfc;font-family:OpenSans,sans-serif;margin:0;padding:0}.site-container{margin:auto;max-width:1200px;width:80%}#article-container,#image-container{display:flex;flex-direction:row;flex-wrap:wrap;justify-content:center;margin-top:10px;width:50%}#error-container{display:flex;flex-direction:row;flex-wrap:wrap;justify-content:center;margin-top:10px;width:100%}.response-container{display:flex;flex-direction:row;flex-wrap:wrap;justify-content:center;width:100%}.masthead{background:#2e3d49;padding:2em 0}.masthead h1{color:#fff;font-weight:400;margin:0;margin-bottom:.2em;text-align:center}#search-form{display:flex;padding:1em 0}#search-keyword{border:none;border-radius:4px;flex-grow:1;margin-right:1.5em;padding:1em 1.5em;font-size:24px}#submit-btn{background-color:#15c26b;border:none;border-radius:20%;color:#fff;padding:1em 1.2em;margin-left:1em;font-size:24px;text-transform:uppercase}.check-box{width:30px;height:24px;background:#555;margin:20px 0 20px 5px;position:relative;border-radius:5px}span{color:#fff;margin:20px 0 0 10px;font-size:20px}.visuallyhidden{border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;white-space:nowrap}
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="preload" as="style" onload="this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"></noscript>
+    <link href="css/styles.css" rel="preload" as="style" onload="this.rel='stylesheet'">
+    <noscript><link href="css/styles.css" rel="stylesheet"></noscript>
+    <script>!function(e){"use strict";var t=function(t,n,r){function o(e){if(i.body)return e();setTimeout(function(){o(e)})}function a(){d.addEventListener&&d.removeEventListener("load",a),d.media=r||"all"}var l,i=e.document,d=i.createElement("link");if(n)l=n;else{var s=(i.body||i.getElementsByTagName("head")[0]).childNodes;l=s[s.length-1]}var u=i.styleSheets;d.rel="stylesheet",d.href=t,d.media="only x",o(function(){l.parentNode.insertBefore(d,n?l:l.nextSibling)});var f=function(e){for(var t=d.href,n=u.length;n--;)if(u[n].href===t)return e();setTimeout(function(){f(e)})};return d.addEventListener&&d.addEventListener("load",a),d.onloadcssdefined=f,f(a),d};"undefined"!=typeof exports?exports.loadCSS=t:e.loadCSS=t}("undefined"!=typeof global?global:this),function(e){if(e.loadCSS){var t=loadCSS.relpreload={};if(t.support=function(){try{return e.document.createElement("link").relList.supports("preload")}catch(e){return!1}},t.poly=function(){for(var t=e.document.getElementsByTagName("link"),n=0;n<t.length;n++){var r=t[n];"preload"===r.rel&&"style"===r.getAttribute("as")&&(e.loadCSS(r.href,r,r.getAttribute("media")),r.rel=null)}},!t.support()){t.poly();var n=e.setInterval(t.poly,300);e.addEventListener&&e.addEventListener("load",function(){t.poly(),e.clearInterval(n)}),e.attachEvent&&e.attachEvent("onload",function(){e.clearInterval(n)})}}}(this);</script>
+    <link rel="manifest" href="manifest.json">
+
+</head>
+<body>
+
+    <header class="masthead">
+        <h1>What are you interested in today?</h1>
+
+        <div class="site-container">
+            <form id="search-form" action="#">
+                <label for="search-keyword" class="visuallyhidden">What are you interested in today?</label>
+                <input id="search-keyword" type="text" name="search-keyword" placeholder="e.g. Android" required>
+                <input id="submit-btn" type="submit" value="&#x1F50E">
+                <label for="fresh-data"><span>Fresh data</span>
+                  <input type="checkbox" id="fresh-data" class="check-box">
+                </label>
+            </form>
+        </div>
+    </header>
+
+    <!--div class="site-container"-->
+    <div id="error-container"></div>
+    <div class="response-container">
+      <div id="image-container"></div>
+      <div id="article-container"></div>
+    </div>
+    <!--/div-->
+    <!--script src="js/register.js"></script-->
+    <script>
+    (function() {
+            'use strict';
+            if (!('serviceWorker' in navigator)) {
+              console.log('Service worker not supported');
+              return;
+            }
+            navigator.serviceWorker.register('service-worker.js',{scope: './'})
+            .then(function(registration) {
+              console.log('Registered at scope',registration.scope);
+            })
+            .catch(function(error) {
+              console.log('Registration failed:', error);
+            });
+    })();
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>
